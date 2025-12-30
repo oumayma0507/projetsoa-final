@@ -1,0 +1,49 @@
+package com.person.router;
+import com.person.model.*;
+import com.person.service.*;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+
+	@Path("/persons")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public class PersonRouter {
+
+	    private PersonService service = new PersonService();
+
+	    @GET
+	    public List<Person> getAllPersons() {
+	        return service.getAll();
+	    }
+
+	    @GET
+	    @Path("/{id}")
+	    public Person getPersonById(@PathParam("id") int id) {
+	        return service.getById(id);
+	    }
+
+	    @GET
+	    @Path("/search/{name}")
+	    public List<Person> searchByName(@PathParam("name") String name) {
+	        return service.getByName(name);
+	    }
+
+	    @POST
+	    public void addPerson(Person person) {
+	        service.add(person);
+	    }
+	    @PUT
+	    @Path("/{id}")
+	    public void updatePerson(Person person) {
+	        service.update(person);
+	    }
+
+	    @DELETE
+	    @Path("/{id}")
+	    public void deletePerson(@PathParam("id") int id) {
+	        service.delete(id);
+	    }
+	}
+

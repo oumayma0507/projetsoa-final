@@ -1,0 +1,65 @@
+package com.person.model;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.Period;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
+@Table(name = "person")
+public class Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String name;
+    private String email;
+
+    @Column(name = "date_naissance")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private LocalDate dateNaissance;
+
+    @Transient
+    private Integer age;
+
+    // ===== Getters & Setters =====
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public Integer getAge() {
+        if (dateNaissance == null) return null;
+        return Period.between(dateNaissance, LocalDate.now()).getYears();
+    }
+}

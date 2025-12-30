@@ -1,0 +1,33 @@
+@Path("/persons")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public class PersonRouter {
+
+    private PersonService service = new PersonService();
+
+    @GET
+    public List<Person> getAllPersons() {
+        return service.getAll();
+    }
+
+    @POST
+    public Response addPerson(Person person) {
+        service.add(person);
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    public Response updatePerson(@PathParam("id") int id, Person person) {
+        person.setId(id);
+        service.update(person);
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deletePerson(@PathParam("id") int id) {
+        service.delete(id);
+        return Response.noContent().build();
+    }
+}

@@ -1,0 +1,68 @@
+package com.person.model;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "person")
+public class Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String name;
+    private String email;
+
+    @Column(name = "date_naissance")
+    private LocalDate dateNaissance;
+
+    private int age;
+
+    // ===== Getters & Setters =====
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        calculAge();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
+        calculAge();
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    // ===== Calcul automatique de l'âge =====
+    private void calculAge() {
+        if (dateNaissance != null) {
+            this.age = LocalDate.now().getYear() - dateNaissance.getYear();
+        }
+    }
+}

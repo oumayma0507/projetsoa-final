@@ -1,0 +1,5 @@
+com\person\dao\PersonDAO.class
+com\person\router\PersonRouter.class
+com\person\config\CorsFilter.class
+com\person\model\Person.class
+com\person\service\PersonService.class
